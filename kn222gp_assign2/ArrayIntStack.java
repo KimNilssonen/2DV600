@@ -10,26 +10,24 @@ public class ArrayIntStack extends AbstractIntCollection implements IntStack{
 		if(size() == values.length) {
 			resize();
 		}
-		int temp;
-		int valueToBeChanged = values[0];
+		int startAt = values[0];
 		values[0] = n;
-
-		if(size() == values.length) {
-			resize();
-		}
-
 		for(int i = 0; i < size(); i++) {
-			temp = values[0+1];
-			values[0+1] = valueToBeChanged;
-			valueToBeChanged = temp;
+			int temp = values[i+1];
+			values[i+1] = startAt;
+			startAt = temp;
 		}
 		size++;
 	}
 
 	@Override
 	public int pop() throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return 0;
+		int toBeReturned = values[0];
+		for(int i = 0; i < size(); i++) {
+			values[i] = values[i+1];
+		}
+		size--;
+		return toBeReturned;
 	}
 
 	@Override

@@ -5,31 +5,29 @@ import da1031.IntList;
 
 public class ArrayIntList extends AbstractIntCollection implements IntList {
 
+	// Adds a new integer at the end of the array. 
 	@Override
 	public void add(int n) {
+		values[size()] = n;
+		size++;
 		if(size() == values.length) {
 			resize();
 		}
-		values[size()] = n;
-		size++;
 	}
 
 	@Override
 	public void addAt(int n, int index) throws IndexOutOfBoundsException {
 		if(checkIndex(index, size())) {
-			// Using temporary files to iterate through the array.
-			int temp;
-			int valueToBeChanged = values[index];
-			values[index] = n;
-
 			if(size() == values.length) {
 				resize();
 			}
-
-			for(int i = 0; i < size(); i++) {
-				temp = values[index+1];
-				values[index+1] = valueToBeChanged;
-				valueToBeChanged = temp;
+			// Using temporary files to iterate through the array.
+			int startAt = values[index];
+			values[index] = n;
+			for(int i = index; i < size(); i++) {
+				int temp = values[i+1];
+				values[i+1] = startAt;
+				startAt = temp;
 			}
 			size++;
 		}
@@ -41,8 +39,8 @@ public class ArrayIntList extends AbstractIntCollection implements IntList {
 	@Override
 	public void remove(int index) throws IndexOutOfBoundsException {
 		if(checkIndex(index, size())) {
-			for(int i = 0; i < index; i++) {
-				values[index] = values[index+1];
+			for(int i = index; i < size; i++) {
+				values[i] = values[i+1];
 			}
 			size--;
 		}
@@ -60,6 +58,7 @@ public class ArrayIntList extends AbstractIntCollection implements IntList {
 		return values[index];
 	}
 
+	// Check if the value at position "i" equals the value "n". If it does, return i.
 	@Override
 	public int indexOf(int n) {
 		for(int i = 0; i < size(); i++) {
