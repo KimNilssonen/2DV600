@@ -157,9 +157,8 @@ public class CollectionTest {
 
 		return list;
 	}
-
 	
-	/*
+	/* 
 	 * Tests for ArrayIntStack
 	 */
 	
@@ -169,7 +168,83 @@ public class CollectionTest {
 	 */
 	public void testPush() {
 		
+		// Building stacks.
+		ArrayIntStack stack = buildIntStack(10);
+		ArrayIntStack stack2 = buildIntStack(10000);
+		
+		// Testing sizes of stacks.
+		assertEquals(10, stack.size());
+		assertEquals(10000, stack2.size());
+		
+		// Pushing a new value into the end of each stack.
+		stack.push(23);
+		stack2.push(50000);
+		
+		// Testing sizes after push.
+		assertEquals(11, stack.size());
+		assertEquals(10001, stack2.size());
+		
+		// Checking if stacks are empty. Expected response: false.
+		assertFalse(stack.isEmpty());
+		assertFalse(stack2.isEmpty());
+		
 	}
+	
+	@Test
+	/*
+	 * Test 7
+	 */
+	public void testPop() {
+		
+		// Building stacks.
+		ArrayIntStack stack = buildIntStack(10);
+		
+		// Trying to pop every element of the stack.
+		try{
+			for(int i = 0; i < stack.size(); i++) {
+				stack.pop();
+			}
+		}
+		catch (IndexOutOfBoundsException e){
+			assertTrue(true);
+		}
+		
+		// Trying to pop after the stack is empty. Should throw IndexOutOfBounds.
+		try {
+			stack.pop();
+		} 
+		catch (IndexOutOfBoundsException e) {
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	/*
+	 * Test 8
+	 */
+	public void testPeek() {
+		ArrayIntStack stack = buildIntStack(10);
+		ArrayIntStack stack2 = buildIntStack(10000);
+		ArrayIntStack emptyStack = buildIntStack(0);
+		
+		// Peeking at top of stacks. Should not throw exception.
+		try {
+			stack.peek();
+			stack2.peek();
+		}
+		catch (IndexOutOfBoundsException e) {
+			assertFalse(true);
+		}
+		
+		// Trying to peek the empty stack. Should throw IndexOutOfBounds.
+		try {
+			emptyStack.peek();
+		}
+		catch (IndexOutOfBoundsException e) {
+			assertTrue(true);
+		}
+	}
+	
 	
 	/*
 	 * Used to create lists to make the test procedure easier and less monotonously.
