@@ -79,6 +79,97 @@ public class QueueTest {
 	 */
 	public void testFirst() {
 		
+		// Testing first on empty queue. Expect IndexOutOfBounds.
+		try {
+			Queue queue = buildQueue(0);
+			queue.first();
+		}
+		catch (IndexOutOfBoundsException e) {
+			assertTrue(true);
+		}
+		
+		// Testing first on queue of five integers. Expect 0.
+		Queue queue = buildQueue(5);
+		assertEquals(queue.first(), queue.dequeue());
+		
+		// Testing first on a big queue. Expect 0.
+		Queue queue2 = buildQueue(100000);
+		assertEquals(queue2.first(), queue2.dequeue());
+		
+		// Testing first on a big queue after the queue has been emptied. Expect IndexOutOfBounds.
+		try {
+			for(int i = 0; i < 99999; i++) {
+				queue2.dequeue();
+			}
+			queue2.first();
+		} 
+		catch (IndexOutOfBoundsException e) {
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	/*
+	 * Test 4
+	 */
+	public void testLast() {
+		Queue queue = buildQueue(10);
+		Queue queue2 = buildQueue(100000);
+		Queue emptyQueue = buildQueue(0);
+		
+		// Testing last() on queue. Expect 9.
+		assertEquals(queue.size()-1, queue.last());
+		
+		// Testing last() on queue2. Expect 99999.
+		assertEquals(queue2.size()-1, queue2.last());
+		
+		// Testing last() on emptyQueue. Expect IndexOutOfBounds.
+		try {
+			emptyQueue.last();
+		}
+		catch (IndexOutOfBoundsException e) {
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	/*
+	 * Test 5
+	 */
+	public void testSize() {
+		Queue queue = buildQueue(5);
+		Queue queue2 = buildQueue(100000);
+		Queue negativeQueue = buildQueue(-1);
+		
+		// Testing size() on queue. Expect 5.
+		assertEquals(5, queue.size());
+		
+		// Testing size() on queue2. Expect 100000.
+		assertEquals(100000, queue2.size());
+		
+		// Testing size() on negativeQueue. Expect 0.
+		assertEquals(0, negativeQueue.size());
+		
+	}
+	
+	@Test
+	/*
+	 * Test 6
+	 */
+	public void testIsEmpty() {
+		Queue queue = buildQueue(5);
+		Queue queue2 = buildQueue(100000);
+		Queue emptyQueue = buildQueue(0);
+		
+		// Testing isEmpty() on queue. Expect false.
+		assertFalse(queue.isEmpty());
+		
+		// Testing isEmpty() on queue2. Expect false.
+		assertFalse(queue2.isEmpty());
+		
+		// Testing isEmpty() on emptyQueue. Expect true.
+		assertTrue(emptyQueue.isEmpty());
+		
 	}
 	
 	public Queue buildQueue(int size) {
