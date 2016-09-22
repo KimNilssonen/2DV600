@@ -26,7 +26,7 @@ public class HashWordSet implements WordSet{
 		}
 
 		node = new Node(word);
-		node.next = buckets[pos];
+		node.next = buckets[pos];		
 		buckets[pos] = node;
 		_size++;
 
@@ -88,15 +88,19 @@ public class HashWordSet implements WordSet{
 		return hashCode % buckets.length;
 	}
 	
+	/*
+	 * Using a index to count the buckets and keep track of which bucket the node exists in.
+	 */
 	private class HashIterator implements Iterator<Word> {
 		private Node node = null;
-        
+        private int index = 0;
         public HashIterator() {
         	for(int i = 0; i < buckets.length; i++) {
         		if(buckets[i] != null) {
-        			node = buckets[i];
+        			node = buckets[i];	
         			break;
         		}
+        		index++;
         	}
 		}
         
@@ -107,15 +111,18 @@ public class HashWordSet implements WordSet{
         
         @Override
         public Word next() {
-        	if(node == null){
-        		throw new IndexOutOfBoundsException();
+        	Node returnThis = node;
+        	if(node.next != null){
+        		node = node.next;
         	}
         	else{
-        		for(int i = getBucketNumber(node.value); i < buckets.length; i++) {
-        			node.next = node;
+        		while(buckets[index++] == null && index < size()){
+        			index++;
         		}
-                return node.next.value;
+        		node = buckets[index];
         	}
+        	
+        	return returnThis.value;
         }
     }
 

@@ -11,7 +11,8 @@ public class WordCount1Main {
 	private static String _path = "";
 	private static HashSet<Word> _hashSet = new HashSet<>();
 	private static TreeSet<Word> _treeSet = new TreeSet<>();
-	
+	private static HashWordSet _hashWordSet = new HashWordSet();
+	private static TreeWordSet _treeWordSet = new TreeWordSet();
 	public static void main(String[] args) {
 
 		// Read txt file.
@@ -29,6 +30,17 @@ public class WordCount1Main {
 			while(treeIterator.hasNext()) {
 				System.out.println(treeIterator.next());
 			}
+			
+//			Iterator<Word> iterator = _hashWordSet.iterator();
+//			while(iterator.hasNext()){
+//				System.out.println(iterator.next());
+//			}
+			
+//			Iterator<Word> treeSetIterator = _treeWordSet.iterator();
+//			while(treeSetIterator.hasNext()){
+//				System.out.println(treeSetIterator.next());
+//			}
+			
 		} 
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -46,6 +58,7 @@ public class WordCount1Main {
 			Word word = new Word(scanner.next());
 			_hashSet.add(word);
 			_treeSet.add(word);
+			_hashWordSet.add(word);
 		}
 		scanner.close();
 	}
