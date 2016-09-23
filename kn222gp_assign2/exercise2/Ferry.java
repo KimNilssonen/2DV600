@@ -3,6 +3,13 @@ package kn222gp_assign2.exercise2;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/*
+ * Used bicylces as 0.2 space because the task clearly said that a car should 
+ * 	be 1 space and 5 bicycles take as much space as 1 car. However the interface returns an int. I first used bicycles as
+ * 	1 space and a car as 5, but later changed it to bicycles as 0.2 and car as 1 since the task said so. I managed to return ints
+ * 	by casting the double as int and used some ugly math round solutions when printing. 
+ */
+
 public class Ferry implements FerryInterface{
 	private final int MAX_NUMBER_OF_PASSENGERS = 200;
 	private final int MAX_VEHICLE_SPACE = 40;

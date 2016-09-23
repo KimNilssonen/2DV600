@@ -56,14 +56,24 @@ public class HashWordSet implements WordSet{
 		return _size;
 	}
 	
+	@Override
 	public String toString() {
+		Iterator<Word> hashWordSetIterator = iterator();
 		String string = "";
-		for(Node node: buckets) {
-			if(node != null) {
-				string += node.toString() + "\n";
-			}			
+		string += "\nHASH:\n"
+				;
+		while(hashWordSetIterator.hasNext()){
+			string += hashWordSetIterator.next() + "\n";
 		}
 		return string;
+		
+//		String string = "";
+//		for(Node node: buckets) {
+//			if(node != null) {
+//				string += node.toString() + "\n";
+//			}			
+//		}
+//		return string;
 	}
 
 	// Code from slides (Hashing and Binary Search Trees).
@@ -116,7 +126,8 @@ public class HashWordSet implements WordSet{
         		node = node.next;
         	}
         	else{
-        		while(buckets[index++] == null && index < size()){
+        		index++;
+        		while(buckets[index] == null && index < size()){
         			index++;
         		}
         		node = buckets[index];

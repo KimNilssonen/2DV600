@@ -35,6 +35,18 @@ public class TreeWordSet implements WordSet{
 	public int size() {
 		return _size;
 	}
+	
+	@Override
+	public String toString() {
+		Iterator<Word> treeWordSetIterator = iterator();
+		String string = "";
+		string += "\nTREE:\n"
+				;
+		while(treeWordSetIterator.hasNext()){
+			string += treeWordSetIterator.next() + "\n";
+		}
+		return string;
+	}
 
 	@Override
 	public Iterator iterator() {
@@ -47,9 +59,9 @@ public class TreeWordSet implements WordSet{
 		public TreeIterator() {
 			node = _root;
 			while(node.left != null) {
-				//Node temp = node;
+				Node temp = node;
 				node = node.left;
-				//node.parent = temp;
+				node.parent = temp;
 			}
 		}
 
@@ -58,30 +70,37 @@ public class TreeWordSet implements WordSet{
 			return node != null;
 		}
 
+		/*
+		 * Collaborated this solution with Filip Rydberg (fr222cy).
+		 */
 		@Override
 		public Word next() {    
-			Word toBeReturned = node.word;
+			node.visited = true;
+			Node toBeReturned = node;
 
 			if(node.right != null) {
 				node = node.right;
-				while(node.left != null) {
-					node = node.left;
+				if(node.parent == null) {
+					node.parent = toBeReturned;
 				}
-				return toBeReturned;
+				while(node.left != null) {
+					Node temp = node;
+					node = node.left;
+					node.parent = temp;
+				}
 			}
-			if(node.parent == null){
-				node = null;
-				return toBeReturned;
+			else {
+				while(node.visited) {
+					if(node.parent == null) {
+						node = null;
+						break;
+					}
+					node = node.parent;
+				}
+				
 			}
-			if(node.parent.left == node){
-				node = node.parent;
-				return toBeReturned;
-			}
-			node = node.parent;
-			return toBeReturned;
-
+			return toBeReturned.word;
 		}
-
 	}
 
 	private class Node {
@@ -89,6 +108,7 @@ public class TreeWordSet implements WordSet{
 		Node left = null;
 		Node right = null;
 		Node parent = null;
+		boolean visited = false;
 
 		private Node (Word w) {
 			word = w;

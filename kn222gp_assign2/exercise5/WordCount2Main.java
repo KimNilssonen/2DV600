@@ -1,82 +1,67 @@
 package kn222gp_assign2.exercise5;
 
-import java.util.Iterator;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class WordCount2Main {
-	
+	private static String _path = "";
+	private static HashWordSet _hashWordSet = new HashWordSet();
+	private static TreeWordSet _treeWordSet = new TreeWordSet();
+
 	public static void main(String[] args) {
 
-		/*
-		 * HashWordSet
-		 */
-
-		System.out.println("Hash:\n");
-		HashWordSet hashWordSet = new HashWordSet();
-		
-		// Hello
-		hashWordSet.add(new Word("Hello"));
-		hashWordSet.add(new Word("hello"));
-		hashWordSet.add(new Word("heoll"));
-		
-		// Apa
-		hashWordSet.add(new Word("Apa"));
-		hashWordSet.add(new Word("apa"));
-		
-		// Test
-		hashWordSet.add(new Word("Test"));
-		hashWordSet.add(new Word("test"));
-		hashWordSet.add(new Word("Ttes"));
-		
-		Iterator<Word> iterator = hashWordSet.iterator();
-		while(iterator.hasNext()){
-			System.out.println(iterator.next());
+		// Read txt file.
+		try {
+			_path = args[0];
+			if(!_path.endsWith(".txt")){
+				_path += ".txt";
+			}
+			readFile(_path);
+			System.out.println("HashWordSet size: " + _hashWordSet.size());
+			System.out.println("TreeWordSet size: " + _treeWordSet.size());		
+			
+			hashWordSet();
+			System.out.println("\n---End of hashWordSet | Start of treeWordSet---\n");
+			treeWordSet();
+			
+			System.exit(0);
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
-		System.out.println("HashWordSet size: " + hashWordSet.size());
-		
-		
-		/*
-		 * TreeWordSet
-		 */
-		
-		System.out.println("\n\nTree:\n");
-		TreeWordSet treeWordSet = new TreeWordSet();
-		
-		// Scrambled alphabet.
-		treeWordSet.add(new Word("m"));
-		treeWordSet.add(new Word("g"));
-		treeWordSet.add(new Word("d"));
-		treeWordSet.add(new Word("q"));
-		treeWordSet.add(new Word("v"));
-		treeWordSet.add(new Word("n"));
-		treeWordSet.add(new Word("j"));
-		treeWordSet.add(new Word("e"));
-		treeWordSet.add(new Word("r"));
-		treeWordSet.add(new Word("f"));
-		treeWordSet.add(new Word("z"));
-		treeWordSet.add(new Word("t"));
-		treeWordSet.add(new Word("o"));
-		treeWordSet.add(new Word("k"));
-		treeWordSet.add(new Word("l"));
-		treeWordSet.add(new Word("a"));
-		treeWordSet.add(new Word("b"));
-		treeWordSet.add(new Word("x"));
-		treeWordSet.add(new Word("s"));
-		treeWordSet.add(new Word("i"));
-		treeWordSet.add(new Word("c"));
-		treeWordSet.add(new Word("h"));
-		treeWordSet.add(new Word("y"));
-		treeWordSet.add(new Word("u"));
-		treeWordSet.add(new Word("w"));
-		treeWordSet.add(new Word("p"));
-		
-		
-		Iterator<Word> iterator2 = treeWordSet.iterator();
-		while(iterator2.hasNext()){
-			System.out.println(iterator2.next());
-		}
-		
-		System.out.println("TreeWordSet size: " + treeWordSet.size());
-		//System.out.println("TreeWordSet contains: " + treeWordSet.contains(new Word("Righty")));
 	}
 
+	// Method that handles reading of file.
+	public static void readFile(String file) throws FileNotFoundException{
+		File fileToScan = new File(file);
+		Scanner scanner = new Scanner(fileToScan);
+		String line = "";
+
+		// Add each word to both sets as long as there is something to add.
+		while(scanner.hasNext()){
+			Word word = new Word(scanner.next());
+			_hashWordSet.add(word);
+			_treeWordSet.add(word);
+		}
+		scanner.close();
+	}
+	
+	public static void hashWordSet() {
+		try {
+			System.out.println(_hashWordSet.toString());
+		}
+		catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void treeWordSet() {
+		try {		
+			System.out.println(_treeWordSet.toString());
+		}
+		catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
 }
