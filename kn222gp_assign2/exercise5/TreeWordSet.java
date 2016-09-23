@@ -38,6 +38,7 @@ public class TreeWordSet implements WordSet{
 	
 	@Override
 	public String toString() {
+		
 		Iterator<Word> treeWordSetIterator = iterator();
 		String string = "";
 		string += "\nTREE:\n"
@@ -56,7 +57,7 @@ public class TreeWordSet implements WordSet{
 	private class TreeIterator implements Iterator<Word> {
 		private Node node = null;
 
-		public TreeIterator() {
+		public TreeIterator() {			
 			node = _root;
 			while(node.left != null) {
 				Node temp = node;
@@ -90,14 +91,19 @@ public class TreeWordSet implements WordSet{
 				}
 			}
 			else {
+				/*
+				 * Noticed that I could only iterate once since each node value had been set to visited.
+				 * 	A temporary node is my solution to this problem. Maybe not the best, but it does the job.
+				 */
 				while(node.visited) {
+					Node temp = node;
+					node.visited = false;
 					if(node.parent == null) {
 						node = null;
 						break;
 					}
-					node = node.parent;
+					node = temp.parent;
 				}
-				
 			}
 			return toBeReturned.word;
 		}
