@@ -41,8 +41,7 @@ public class TreeWordSet implements WordSet{
 		
 		Iterator<Word> treeWordSetIterator = iterator();
 		String string = "";
-		string += "\nTREE:\n"
-				;
+		string += "\nTREE:\n";
 		while(treeWordSetIterator.hasNext()){
 			string += treeWordSetIterator.next() + "\n";
 		}
