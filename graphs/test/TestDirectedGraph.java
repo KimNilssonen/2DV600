@@ -1,4 +1,3 @@
-
 package graphs.test;
 
 import static org.junit.Assert.assertEquals;

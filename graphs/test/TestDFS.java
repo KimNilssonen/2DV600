@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 
-import teachers.*;                      // Replace with groupname.*;
+import kn222gp.*;                      // Replace with groupname.*;
 /**
  * 
  * A  weakness in this case is that many tests

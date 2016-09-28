@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 
-import teachers.*;                 // Replace with groupname.*;
+import kn222gp.*;                 // Replace with groupname.*;
 
 public class TestAlgorithms {
 	// Run test as a standard Java application

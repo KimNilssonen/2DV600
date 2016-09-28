@@ -1,5 +1,6 @@
 package kn222gp;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -7,12 +8,11 @@ import java.util.TreeSet;
 import graphs.*;
 
 public class MyNode<E> extends Node<E>{
-	private Set<Node<E>> _preds = new TreeSet<>();
-	private Set<Node<E>> _succs = new TreeSet<>();
+	private Set<Node<E>> _preds = new HashSet<>();
+	private Set<Node<E>> _succs = new HashSet<>();
 	
 	protected MyNode(E item) {
 		super(item);
-		
 	}
 
 	@Override
@@ -27,14 +27,12 @@ public class MyNode<E> extends Node<E>{
 
 	@Override
 	public Iterator<Node<E>> succsOf() {
-		// TODO Auto-generated method stub
-		return null;
+		return _succs.iterator();
 	}
 
 	@Override
 	public boolean hasPred(Node<E> node) {
-		// TODO Auto-generated method stub
-		return false;
+		return _preds.contains(node);
 	}
 
 	@Override
@@ -44,8 +42,7 @@ public class MyNode<E> extends Node<E>{
 
 	@Override
 	public Iterator<Node<E>> predsOf() {
-		// TODO Auto-generated method stub
-		return null;
+		return _preds.iterator();
 	}
 
 	@Override
@@ -55,8 +52,7 @@ public class MyNode<E> extends Node<E>{
 
 	@Override
 	protected void removeSucc(Node<E> succ) {
-		// TODO Auto-generated method stub
-		
+		_succs.remove(succ);
 	}
 
 	@Override
@@ -66,14 +62,12 @@ public class MyNode<E> extends Node<E>{
 
 	@Override
 	protected void removePred(Node<E> pred) {
-		// TODO Auto-generated method stub
-		
+		_preds.remove(pred);
 	}
 
 	@Override
-	protected void disconnect() {
-		// TODO Auto-generated method stub
-		
+	protected void disconnect() {	
+		_succs.clear();
+		_preds.clear();
 	}
-
 }
