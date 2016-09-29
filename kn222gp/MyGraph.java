@@ -10,6 +10,7 @@ import java.util.Set;
 
 import graphs.DirectedGraph;
 import graphs.Node;
+import kn222gp_assign2.exercise5.Word;
 
 public class MyGraph<E> implements DirectedGraph<E>{
 
@@ -145,7 +146,7 @@ public class MyGraph<E> implements DirectedGraph<E>{
 				node.removePred(nodeToBeRemoved);
 			}
 		}
-		
+
 		nodeToBeRemoved.disconnect();
 		_graph.remove(item);
 	}
@@ -171,8 +172,24 @@ public class MyGraph<E> implements DirectedGraph<E>{
 			throw new RuntimeException("Recieved_null_as_input");
 		}
 		if(containsEdgeFor(from, to)) {
-			_graph.get(from).removeSucc(_graph.get(to));
-			_graph.get(to).removePred(_graph.get(from));
+			MyNode<E> fromNode = _graph.get(from);
+			MyNode<E> toNode = _graph.get(to);
+			fromNode.removeSucc(toNode);
+			toNode.removePred(fromNode);
+
+			if(fromNode.isHead()){
+				_heads.add(fromNode);
+			}
+			else if(fromNode.isTail()) {
+				_tails.add(fromNode);
+			}
+			if(toNode.isHead()) {
+				_heads.add(toNode);
+			}
+			else if(toNode.isTail()) {
+				_tails.add(toNode);
+			}
+
 			return true;
 		}
 		return false;
@@ -188,6 +205,9 @@ public class MyGraph<E> implements DirectedGraph<E>{
 		return string;
 	}
 
+	/*
+	 * Using a iterator class so that I can cast the next value of the iterator (iterator.next) to a Node<E>.
+	 */
 	@SuppressWarnings ("unchecked")
 	private class nodeIterator implements Iterator<Node<E>> {
 
@@ -203,6 +223,4 @@ public class MyGraph<E> implements DirectedGraph<E>{
 			return (Node<E>)iterator.next();
 		}
 	}
-
-
 }
