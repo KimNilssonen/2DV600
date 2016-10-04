@@ -131,7 +131,6 @@ public class MyGraph<E> implements DirectedGraph<E>{
 		return edges;
 	}
 
-	// TODO: Removes one too many? expects 2 but was 1.
 	@Override
 	public void removeNodeFor(E item) { 
 		if(item == null || !_graph.containsKey(item)) {
