@@ -2,6 +2,7 @@ package kn222gp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,20 +14,25 @@ public class MyDFS<E> implements DFS<E> {
 
 	@Override
 	public List<Node<E>> dfs(DirectedGraph<E> graph, Node<E> root) {
-		List<Node<E>> visited = new ArrayList<>();
-		return dfsRecursive(graph, visited, root);
+		List<Node<E>> returnList = new ArrayList<>();
+		return dfsRecursive(returnList, root);
 	}
 
 
 	@Override
 	public List<Node<E>> dfs(DirectedGraph<E> graph) {
-		List<Node<E>> visited = new ArrayList<>();
-		return dfsRecursive(graph, visited, null);
+		List<Node<E>> returnList = new ArrayList<>();
+		Iterator<Node<E>> heads = graph.heads();
+
+		while(heads.hasNext()) {
+			returnList = dfsRecursive(returnList, heads.next());
+		}
+		return returnList;
 	}
-	
+
 	@Override
 	public List<Node<E>> postOrder(DirectedGraph<E> g, Node<E> root) {
-		List<Node<E>> visited = new ArrayList<>();
+		HashSet<Node<E>> visited = new HashSet<>();
 		List<Node<E>> returnList = new ArrayList<>();
 		return postOrderRecurv(visited, returnList, root);
 	}
@@ -42,7 +48,7 @@ public class MyDFS<E> implements DFS<E> {
 	@Override
 	public boolean isCyclic(DirectedGraph<E> graph) {
 		Iterator<Node<E>> iterator = graph.iterator();
-		
+
 		while(iterator.hasNext()) {
 			Node<E> source = iterator.next();
 			Iterator<Node<E>> iterator2 = source.succsOf();
@@ -72,7 +78,7 @@ public class MyDFS<E> implements DFS<E> {
 
 	@Override
 	public List<Node<E>> postOrder(DirectedGraph<E> g) {
-		List<Node<E>> visitedList = new ArrayList<>();
+		HashSet<Node<E>> visitedList = new HashSet<>();
 		List<Node<E>> returnList = new ArrayList<>();
 		Iterator<Node<E>> heads = g.heads();
 
@@ -90,40 +96,25 @@ public class MyDFS<E> implements DFS<E> {
 	/*
 	 * Help method for dfs to call itself recursively.
 	 */
-	private List<Node<E>> dfsRecursive(DirectedGraph<E> graph, List<Node<E>> visitedList, Node<E> root) {		
-		if(root != null) {
-			Iterator<Node<E>> successors = root.succsOf();
+	private List<Node<E>> dfsRecursive(List<Node<E>> returnList, Node<E> root) {		
+		Iterator<Node<E>> successors = root.succsOf();
 
-			if(!visitedList.contains(root)) {
-				visitedList.add(root);
-				root.num = visitedList.size();
-			}
+		root.num = returnList.size();
+		returnList.add(root);
 
-			while(successors.hasNext()) {
-				Node<E> node = successors.next();
-				if(!visitedList.contains(node)) {
-					visitedList.add(node);
-					node.num = visitedList.size();
-					dfsRecursive(graph, visitedList, node);
-				}
+		while(successors.hasNext()) {
+			Node<E> node = successors.next();
+			if(!returnList.contains(node)) {
+				dfsRecursive(returnList, node);
 			}
 		}
-		else {
-			for(Node<E> node: graph) {
-				if(!visitedList.contains(node)) {
-					node.num = visitedList.size();
-					visitedList.add(node);
-					dfsRecursive(graph, visitedList, null);
-				}
-			}
-		}
-		return visitedList;
+		return returnList;
 	}
 
 	/*
 	 *  Help method for postOrder.
 	 */
-	private List<Node<E>> postOrderRecurv (List<Node<E>> visitedList, List<Node<E>> returnList, Node<E> root) {
+	private List<Node<E>> postOrderRecurv (HashSet<Node<E>> visitedList, List<Node<E>> returnList, Node<E> root) {
 		if(root != null) {
 
 			if(!visitedList.contains(root)) {

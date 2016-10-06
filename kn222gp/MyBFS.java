@@ -13,7 +13,7 @@ public class MyBFS<E> implements BFS<E> {
 
 	@Override
 	public List<Node<E>> bfs(DirectedGraph<E> graph, Node<E> root) {
-		List<Node<E>> visitedList = new ArrayList<>();
+		HashSet<Node<E>> visitedList = new HashSet<>();
 		List<Node<E>> returnList = new ArrayList<>();
 		HashSet<Node<E>> hashSet = new HashSet<>(); 
 		hashSet.add(root);
@@ -24,12 +24,12 @@ public class MyBFS<E> implements BFS<E> {
 	@Override
 	public List<Node<E>> bfs(DirectedGraph<E> graph) {
 		List<Node<E>> returnList = new ArrayList<>();
-		List<Node<E>> visitedList = new ArrayList<>();
+		HashSet<Node<E>> visitedList = new HashSet<>();
 		HashSet<Node<E>> hashSet = new HashSet<>();;
 
 		Iterator<Node<E>> heads = graph.heads();
 		while(heads.hasNext()) {
-			Node node = heads.next();
+			Node<E> node = heads.next();
 
 			if(!visitedList.contains(node)) {
 				node.num = visitedList.size();
@@ -48,7 +48,7 @@ public class MyBFS<E> implements BFS<E> {
 	 * -------------------------
 	 */
 
-	private List<Node<E>> bfsRecursive(HashSet<Node<E>> hashSet, List<Node<E>> visitedList, List<Node<E>> returnList) {		
+	private List<Node<E>> bfsRecursive(HashSet<Node<E>> hashSet, HashSet<Node<E>> visitedList, List<Node<E>> returnList) {		
 		Iterator<Node<E>> hashSetIterator = hashSet.iterator();
 		HashSet<Node<E>> newSet = new HashSet<>();
 
