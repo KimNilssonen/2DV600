@@ -23,6 +23,8 @@ public class DFSTester {
 		System.out.println("postOrder node: " + dfs.postOrder(graph, graph.getNodeFor("c")));
 		System.out.println();
 		System.out.println("postOrder: " + dfs.postOrder(graph));
+		System.out.println();
+		System.out.println("topSort: " + dfs.topSort(graph));
 		
 
 	}

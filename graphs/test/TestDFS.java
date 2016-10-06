@@ -175,7 +175,7 @@ public class TestDFS  {
     	/* Test graph with two heads */
     	list = bfs.bfs(dg);
     	System.out.println("\tTwoParts dfs-order: "+list);
-    	assertEquals(list.size(),dg.nodeCount());
+    	assertEquals(dg.nodeCount(), list.size()); // Was reversed, so I swapped them.
     	start = list.get(0).num;
     	for (int j=0;j<list.size();j++) {
     		Node<Integer> node =  list.get(j);
