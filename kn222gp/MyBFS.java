@@ -17,7 +17,7 @@ public class MyBFS<E> implements BFS<E> {
 		List<Node<E>> returnList = new ArrayList<>();
 		HashSet<Node<E>> hashSet = new HashSet<>(); 
 		hashSet.add(root);
-		
+
 		return bfsRecursive(hashSet, visitedList, returnList);
 	}
 
@@ -27,17 +27,25 @@ public class MyBFS<E> implements BFS<E> {
 		HashSet<Node<E>> visitedList = new HashSet<>();
 		HashSet<Node<E>> hashSet = new HashSet<>();;
 
-		Iterator<Node<E>> heads = graph.heads();
-		while(heads.hasNext()) {
-			Node<E> node = heads.next();
+		// If the graph does contains heads, iterate from the head.
+		if(graph.headCount() > 0) {
+			Iterator<Node<E>> heads = graph.heads();
+			while(heads.hasNext()) {
+				Node<E> node = heads.next();
 
-			if(!visitedList.contains(node)) {
-				node.num = visitedList.size();
-				visitedList.add(node);
-				hashSet.add(node);
-				returnList.add(node);
-				returnList = bfsRecursive(hashSet, visitedList, returnList);
+				if(!visitedList.contains(node)) {
+					node.num = visitedList.size();
+					visitedList.add(node);
+					hashSet.add(node);
+					returnList.add(node);
+					returnList = bfsRecursive(hashSet, visitedList, returnList);
+				}
 			}
+		}
+		// Else start from the first node in the graph.
+		else {
+			hashSet.add(graph.getNodeFor(graph.allItems().get(0)));
+			returnList = bfsRecursive(hashSet, visitedList, returnList);
 		}
 		return returnList;
 	}

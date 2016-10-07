@@ -24,10 +24,15 @@ public class MyDFS<E> implements DFS<E> {
 	public List<Node<E>> dfs(DirectedGraph<E> graph) {
 		List<Node<E>> returnList = new ArrayList<>();
 		HashSet<Node<E>> hashSet = new HashSet<>(); 
-		Iterator<Node<E>> heads = graph.heads();
 
-		while(heads.hasNext()) {
-			returnList = dfsRecursive(returnList, heads.next(), hashSet);
+		if(graph.headCount() > 0) {
+			Iterator<Node<E>> heads = graph.heads();
+			while(heads.hasNext()) {
+				returnList = dfsRecursive(returnList, heads.next(), hashSet);
+			}
+		}
+		else {
+			returnList = dfsRecursive(returnList, graph.getNodeFor(graph.allItems().get(0)), hashSet);
 		}
 		return returnList;
 	}
@@ -104,7 +109,7 @@ public class MyDFS<E> implements DFS<E> {
 		root.num = returnList.size();
 		returnList.add(root);
 		setOfNodes.add(root);
-		
+
 
 		while(successors.hasNext()) {
 			Node<E> node = successors.next();
