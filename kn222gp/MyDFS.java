@@ -19,7 +19,6 @@ public class MyDFS<E> implements DFS<E> {
 		return dfsRecursive(returnList, root, hashSet);
 	}
 
-
 	@Override
 	public List<Node<E>> dfs(DirectedGraph<E> graph) {
 		List<Node<E>> returnList = new ArrayList<>();

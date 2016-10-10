@@ -1,0 +1,39 @@
+/*
+*Information about time complexity and examples have been found in lecture slides, and at these sites:
+*			http://techieme.in/depth-first-traversal/
+*			https://www.daniweb.com/programming/computer-science/threads/13488/time-complexity-of-algorithm
+*			http://bigocheatsheet.com/
+*			http://stackoverflow.com/questions/10118580/time-complexity
+*	the sites were visited for better understanding of time complexity.
+*/
+
+TIME COMPLEXITY ESITMATES
+1.	Depth-First Search as implemented in X.MyDFS.dfs(DirectedGraph<E> graph)
+		Time Complexity: O(n + m).
+		The time complexity is O(n + m) because I look for the successors which means I am
+		checking all the edges. 
+		Therefore, in this case, n is the amount of nodes and m is the amount of edges for each node. 
+		
+		Pseudo code from my implementation:
+		-----------------------------------
+			while(successors.hasNext()) {
+				Node<E> node = successors.next();
+				if(!setOfNodes.contains(node)) {
+					dfsRecursive(returnList, node, setOfNodes);
+				}
+			}
+			return returnList;
+		-----------------------------------
+			
+
+2.	Breadth-First Search as implemented in X.MyBFS.bfs(DirectedGraph<E> graph)
+		
+			
+
+3.	Transitive Closure as implement in X.MyTransitiveClosure.computeClosure(DirectedGraph<E> graph)
+		
+		
+
+4.	Connected Components as implement in X.MyConnectedComponents.computeComponents(DirectedGraph<E> graph)
+		
+		
