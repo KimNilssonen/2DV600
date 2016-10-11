@@ -15,16 +15,16 @@ public class MyTransitiveClosure<E> implements TransitiveClosure<E> {
 
 	@Override
 	public Map<Node<E>, Collection<Node<E>>> computeClosure(DirectedGraph<E> dg) {
-		Map<Node<E>, Collection<Node<E>>> map = new HashMap<>();
-		Collection<Node<E>> nodes = new HashSet<>();
-		DFS<E> dfs = new MyDFS<E>();
+		Map<Node<E>, Collection<Node<E>>> map = new HashMap<>(); // O(1)
+		Collection<Node<E>> nodes = new HashSet<>(); // O(1)
+		DFS<E> dfs = new MyDFS<E>(); // O(1)
 		
-		Iterator<Node<E>> iterator = dg.iterator();
+		Iterator<Node<E>> iterator = dg.iterator(); // O(1)
 		
-		while(iterator.hasNext()){
-			Node<E> node = iterator.next();
-			nodes = dfs.dfs(dg, node);
-			map.put(node, nodes);
+		while(iterator.hasNext()){ // O(n)
+			Node<E> node = iterator.next(); // O(1)
+			nodes = dfs.dfs(dg, node); // O(n+s)
+			map.put(node, nodes); // O(1)
 		}
 		return map;
 	}

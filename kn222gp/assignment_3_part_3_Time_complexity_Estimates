@@ -7,33 +7,137 @@
 *	the sites were visited for better understanding of time complexity.
 */
 
-TIME COMPLEXITY ESITMATES
+Personal notes: 
+	- Ignorera alla konstanter.
+	- Ta reda på vad osm varieras beroende på storleken på indatan.
+	- ArrayList tar Contains O(n)
+	- Hashset tar Contains O(1)
+	- BST tar Contains O(log(n))
+
+TIME COMPLEXITY ESTIMATES
 1.	Depth-First Search as implemented in X.MyDFS.dfs(DirectedGraph<E> graph)
-		Time Complexity: O(n + m).
-		The time complexity is O(n + m) because I look for the successors which means I am
-		checking all the edges. 
-		Therefore, in this case, n is the amount of nodes and m is the amount of edges for each node. 
+		The time complexity is O(n + s) because for each node I check it's successors.  
+		Therefore, in this case, 'n' is the amount of nodes and 's' is the amount of edges for each node. 
 		
 		Pseudo code from my implementation:
 		-----------------------------------
-			while(successors.hasNext()) {
-				Node<E> node = successors.next();
-				if(!setOfNodes.contains(node)) {
-					dfsRecursive(returnList, node, setOfNodes);
+		dfs(DirectedGraph<E> graph) {
+		...
+			if(graph.headCount() > 0) { // O(1)
+				Iterator<Node<E>> heads = graph.heads(); // O(1)
+				while(heads.hasNext()) { // O(n)
+					returnList = dfsRecursive(returnList, heads.next(), hashSet); // O(1)
 				}
 			}
+			else {
+				returnList = dfsRecursive(returnList, graph.getNodeFor(graph.allItems().get(0)), hashSet); // O(1)
+			}
 			return returnList;
+		}
+		
+		dfsRecursive(List<Node<E>> returnList, Node<E> root, HashSet<Node<E>> setOfNodes) {
+		...
+			while(successors.hasNext()) { // O(s)
+			Node<E> node = successors.next(); // O(1)
+			if(!setOfNodes.contains(node)) { // O(1)
+				dfsRecursive(returnList, node, setOfNodes); // O(n)
+			}
+		}
+		return returnList;
+		}
 		-----------------------------------
 			
 
 2.	Breadth-First Search as implemented in X.MyBFS.bfs(DirectedGraph<E> graph)
+		Like the dfs the bfs get a time complexity of O(n + s) because each node check it's successors.
+		Therefore, in this case, 'n' is the amount of nodes and 's' is the amount of edges for each node.
 		
-			
+		Pseudo code from my implementation:
+		-----------------------------------
+		bfsRecursive(HashSet<Node<E>> hashSet, HashSet<Node<E>> visitedList, List<Node<E>> returnList) {
+		...
+			while(hashSetIterator.hasNext()) { // O(n)
+				Node<E> node = hashSetIterator.next(); // O(1)
+				if(!visitedList.contains(node)) { // O(1)
+					node.num = visitedList.size(); // O(1)
+					visitedList.add(node); // O(1)
+					returnList.add(node); // O(1)
+				}
+
+				Iterator<Node<E>> successors = node.succsOf(); // O(1)
+				while(successors.hasNext()) { // O(s)
+					Node<E> nextNode = successors.next(); // O(1)
+
+					if(!visitedList.contains(nextNode)) { // O(1)
+						newSet.add(nextNode); // O(1)
+					}
+				}
+			}
+
+			if(!newSet.isEmpty()) { // O(1)
+				bfsRecursive(newSet, visitedList, returnList); // O(n)
+			}
+
+			return returnList;
+			}
+		}
+		-----------------------------------
 
 3.	Transitive Closure as implement in X.MyTransitiveClosure.computeClosure(DirectedGraph<E> graph)
+		Since the transitive closure calls the dfs the time complexity is O(N(N+S)), which can be translated to O(N^2+NS).
+		This is because the transitive does one dfs for each node in the graph and the dfs has the time complexity, O(N+S).  
 		
+		Pseudo code from my implementation:
+		-----------------------------------
+		computeClosure(DirectedGraph<E> dg) {
+			...
+			Iterator<Node<E>> iterator = dg.iterator(); // O(1)
 		
+			while(iterator.hasNext()){ // O(n)
+				Node<E> node = iterator.next(); // O(1)
+				nodes = dfs.dfs(dg, node); // O(n+s)
+				map.put(node, nodes); // O(1)
+			}
+			return map;
+		}
+		-----------------------------------
 
 4.	Connected Components as implement in X.MyConnectedComponents.computeComponents(DirectedGraph<E> graph)
+	
+		
+	
+		Pseudo code from my implementation:
+		-----------------------------------
+		computeComponents(DirectedGraph<E> dg) {
+			...
+			MyDFS<E> dfs = new MyDFS<E>(); // O(1)
+			while(iterator.hasNext()){ // O(n)
+				connection = false;
+				Node<E> node = iterator.next(); // O(1)
+				if(!visited.contains(node)) { // O(1)
+					dfsNodes = dfs.dfs(dg, node); // O(n + s)
+
+					for(Node<E> n: dfsNodes) { // O(n)
+						if(visited.contains(n)) { // O(1)
+							for(Collection<Node<E>> coll: nodesCollection) { // O(n)
+								if(coll.contains(n)) { // O(1)
+									connection = true; // O(1)
+									visited.addAll(dfsNodes); // O(n)
+									coll.addAll(dfsNodes); // O(n)
+								}
+							}
+						}
+					}
+					if(!connection) { // O(1)
+						visited.addAll(dfsNodes); // O(n)
+						nodes = new HashSet<>(); // O(1)
+						nodes.addAll(dfsNodes); // O(n)
+						nodesCollection.add(nodes); // O(1)
+					}
+				}
+			}
+			return nodesCollection;
+		}
+		-----------------------------------
 		
 		

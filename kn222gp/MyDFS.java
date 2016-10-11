@@ -21,17 +21,17 @@ public class MyDFS<E> implements DFS<E> {
 
 	@Override
 	public List<Node<E>> dfs(DirectedGraph<E> graph) {
-		List<Node<E>> returnList = new ArrayList<>();
-		HashSet<Node<E>> hashSet = new HashSet<>(); 
+		List<Node<E>> returnList = new ArrayList<>(); // O(1)
+		HashSet<Node<E>> hashSet = new HashSet<>();  // O(1)
 
 		if(graph.headCount() > 0) {
-			Iterator<Node<E>> heads = graph.heads();
-			while(heads.hasNext()) {
-				returnList = dfsRecursive(returnList, heads.next(), hashSet);
+			Iterator<Node<E>> heads = graph.heads(); // O(1)
+			while(heads.hasNext()) { // O(n)
+				returnList = dfsRecursive(returnList, heads.next(), hashSet); // O(1)
 			}
 		}
 		else {
-			returnList = dfsRecursive(returnList, graph.getNodeFor(graph.allItems().get(0)), hashSet);
+			returnList = dfsRecursive(returnList, graph.getNodeFor(graph.allItems().get(0)), hashSet); // O(1)
 		}
 		return returnList;
 	}
@@ -103,17 +103,17 @@ public class MyDFS<E> implements DFS<E> {
 	 * Help method for dfs to call itself recursively.
 	 */
 	private List<Node<E>> dfsRecursive(List<Node<E>> returnList, Node<E> root, HashSet<Node<E>> setOfNodes) {		
-		Iterator<Node<E>> successors = root.succsOf();
+		Iterator<Node<E>> successors = root.succsOf(); // O(1)
 
-		root.num = returnList.size();
-		returnList.add(root);
-		setOfNodes.add(root);
+		root.num = returnList.size(); // O(1)
+		returnList.add(root); // O(1)
+		setOfNodes.add(root); // O(1)
 
 
-		while(successors.hasNext()) {
-			Node<E> node = successors.next();
-			if(!setOfNodes.contains(node)) {
-				dfsRecursive(returnList, node, setOfNodes);
+		while(successors.hasNext()) { // O(s)
+			Node<E> node = successors.next(); // O(1)
+			if(!setOfNodes.contains(node)) { // O(1)
+				dfsRecursive(returnList, node, setOfNodes); // O(n)
 			}
 		}
 		return returnList;
