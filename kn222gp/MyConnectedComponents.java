@@ -11,6 +11,9 @@ import graphs.Node;
 
 public class MyConnectedComponents<E> implements ConnectedComponents<E> {
 
+	/*
+	 * Returns a collection which in turn holds collections of nodes.
+	 */
 	@Override
 	public Collection<Collection<Node<E>>> computeComponents(DirectedGraph<E> dg) {
 		Collection<Node<E>> nodes;
@@ -42,11 +45,11 @@ public class MyConnectedComponents<E> implements ConnectedComponents<E> {
 				 */
 				for(Node<E> n: dfsNodes) { // O(n)
 					if(visited.contains(n)) { // O(1)
-						for(Collection<Node<E>> coll: nodesCollection) { // O(n)
+						for(Collection<Node<E>> coll: nodesCollection) { // O(c)
 							if(coll.contains(n)) { // O(1)
 								connection = true; // O(1)
 								visited.addAll(dfsNodes); // O(n)
-								coll.addAll(dfsNodes); // O(n)
+								coll.addAll(dfsNodes); // O(n)  
 							}
 						}
 					}

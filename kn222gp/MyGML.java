@@ -12,6 +12,9 @@ public class MyGML<E> extends GML<E>{
 		super(dg);
 	}
 
+	/*
+	 * Returns a string in GML format.
+	 */
 	@Override
 	public String toGML() {
 		Map<Node<E>, Integer> map = new HashMap<>(); 

@@ -103,28 +103,31 @@ TIME COMPLEXITY ESTIMATES
 		-----------------------------------
 
 4.	Connected Components as implement in X.MyConnectedComponents.computeComponents(DirectedGraph<E> graph)
-	
+		Since the connected component calls the dfs for each node the formula O(N^2+NS) will have to be included in the time complexity.
+		O(N^2+NS) in combination with my other loops using collections and also looping each node in the dfs, the calculation would look like this:  
+		O(n((n+s)+(n(c+2n)))) = O(n^2+ns)+(nc+2n^2) = O(2n^4+ns+nc) O(n^4+ns+nc). Therefore the time complexity
+		would be O(n^4+ns+nc).
 		
+		or this, depending on how to count (+/*)? 
+			n((n+s)+n(n(n))) n(n+s)+n(n(n)(n)) ---> n^2+ns + n^4
 	
 		Pseudo code from my implementation:
 		-----------------------------------
 		computeComponents(DirectedGraph<E> dg) {
 			...
-			MyDFS<E> dfs = new MyDFS<E>(); // O(1)
 			while(iterator.hasNext()){ // O(n)
 				connection = false;
 				Node<E> node = iterator.next(); // O(1)
 				if(!visited.contains(node)) { // O(1)
-					dfsNodes = dfs.dfs(dg, node); // O(n + s)
+					dfsNodes = dfs.dfs(dg, node); // O(n + s) ---> N(N+S)
 
-					for(Node<E> n: dfsNodes) { // O(n)
+					for(Node<E> n: dfsNodes) { // O(n)  --> N((N+S)+N)
 						if(visited.contains(n)) { // O(1)
-							for(Collection<Node<E>> coll: nodesCollection) { // O(n)
-								if(coll.contains(n)) { // O(1)
-									connection = true; // O(1)
-									visited.addAll(dfsNodes); // O(n)
-									coll.addAll(dfsNodes); // O(n)
-								}
+							for(Collection<Node<E>> coll: nodesCollection) { // O(n)  --> N((N+S)+N(N(N)))
+								...
+								visited.addAll(dfsNodes); // O(n)
+								coll.addAll(dfsNodes); // O(n)
+								
 							}
 						}
 					}
@@ -137,7 +140,9 @@ TIME COMPLEXITY ESTIMATES
 				}
 			}
 			return nodesCollection;
-		}
+		}		
 		-----------------------------------
-		
+		I am not really sure about visited.addAll(dfsNodes), if it should be considered O(1) or O(n) but I have decided
+		to go with O(n). This is because I see this addAll as a loop since I could just as well use a foreach loop to add
+		all the nodes. (i.e. foreach(Node n: dfsNodes) { visited.add(n); } ). This is why I decided to go with O(n).
 		

@@ -12,6 +12,12 @@ import graphs.Node;
 
 public class MyDFS<E> implements DFS<E> {
 
+	/*
+	 * This method calls the dfsRecursive method which returns a list of all nodes in a depth first order.
+	 * 		The dfsRecursive method calls itself until the graph has no more nodes to search through.
+	 * This methods takes a node as a parameter and sets it as start node to search from.
+	 * Returns a list sorted as depth first.
+	 */
 	@Override
 	public List<Node<E>> dfs(DirectedGraph<E> graph, Node<E> root) {
 		List<Node<E>> returnList = new ArrayList<>();
@@ -19,6 +25,13 @@ public class MyDFS<E> implements DFS<E> {
 		return dfsRecursive(returnList, root, hashSet);
 	}
 
+	/*
+	 * This method calls the dfsRecursive method which returns a list of all nodes in a depth first order.
+	 * 		The dfsRecursive method calls itself until the graph has no more nodes to search through.
+	 *  This method does not take a node as a parameter to start the search from so it takes a head node if
+	 *   	there is one, otherwise it takes a random node as start node.
+	 *   Returns a list sorted as depth first.
+	 */
 	@Override
 	public List<Node<E>> dfs(DirectedGraph<E> graph) {
 		List<Node<E>> returnList = new ArrayList<>(); // O(1)
@@ -36,6 +49,12 @@ public class MyDFS<E> implements DFS<E> {
 		return returnList;
 	}
 
+	/*
+	 * This method calls the postOrderRecursive method which returns a list of all nodes in a post order.
+	 * 		The dfsRecursive method calls itself until the graph has no more nodes to search through.
+	 * This methods takes a node as a parameter and sets it as start node to search from.
+	 * Returns a list sorted as post order.
+	 */
 	@Override
 	public List<Node<E>> postOrder(DirectedGraph<E> g, Node<E> root) {
 		HashSet<Node<E>> visited = new HashSet<>();
@@ -43,14 +62,16 @@ public class MyDFS<E> implements DFS<E> {
 		return postOrderRecurv(visited, returnList, root);
 	}
 
-
-
 	@Override
 	public List<Node<E>> postOrder(DirectedGraph<E> g, boolean attach_dfs_number) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/*
+	 * This method checks if the graph is cyclic by checking if a node has a successor to itself.
+	 * Returns true if the graph is cyclic.
+	 */
 	@Override
 	public boolean isCyclic(DirectedGraph<E> graph) {
 		Iterator<Node<E>> iterator = graph.iterator();
@@ -67,6 +88,11 @@ public class MyDFS<E> implements DFS<E> {
 		return false;
 	}
 
+	/*
+	 * This method sorts the graph to a topological order as long as the graph is not cyclic.
+	 * 	Top sort means that for every directed edge nm from node n to node m, n comes before m in the ordering.
+	 * Returns a list sorted as topological.
+	 */
 	@Override
 	public List<Node<E>> topSort(DirectedGraph<E> graph) {
 		if(!isCyclic(graph)) {
@@ -82,6 +108,12 @@ public class MyDFS<E> implements DFS<E> {
 		}
 	}
 
+	/*
+	 * This method calls the postOrderRecursive method which returns a list of all nodes in a post order.
+	 * 		The postOrderRecursive method calls itself until the graph has no more nodes to search through.
+	 *  This method does not take a node as a parameter to start the search from so it takes a head node as start node.
+	 *  Returns a list sorted as post order.
+	 */	
 	@Override
 	public List<Node<E>> postOrder(DirectedGraph<E> g) {
 		HashSet<Node<E>> visitedList = new HashSet<>();
@@ -101,6 +133,7 @@ public class MyDFS<E> implements DFS<E> {
 
 	/*
 	 * Help method for dfs to call itself recursively.
+	 * Returns a list sorted as depth first.
 	 */
 	private List<Node<E>> dfsRecursive(List<Node<E>> returnList, Node<E> root, HashSet<Node<E>> setOfNodes) {		
 		Iterator<Node<E>> successors = root.succsOf(); // O(1)
@@ -121,6 +154,7 @@ public class MyDFS<E> implements DFS<E> {
 
 	/*
 	 *  Help method for postOrder.
+	 *  Returns a list sorted as post order.
 	 */
 	private List<Node<E>> postOrderRecurv (HashSet<Node<E>> visitedList, List<Node<E>> returnList, Node<E> root) {
 		if(root != null) {

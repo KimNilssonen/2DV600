@@ -13,6 +13,10 @@ import graphs.TransitiveClosure;
 
 public class MyTransitiveClosure<E> implements TransitiveClosure<E> {
 
+	/*
+	 * Iterates through the graph and does a dfs search on each node.
+	 * Returns a map holding node as key value and collection for that node. 
+	 */
 	@Override
 	public Map<Node<E>, Collection<Node<E>>> computeClosure(DirectedGraph<E> dg) {
 		Map<Node<E>, Collection<Node<E>>> map = new HashMap<>(); // O(1)

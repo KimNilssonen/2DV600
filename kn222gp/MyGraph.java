@@ -22,6 +22,10 @@ public class MyGraph<E> implements DirectedGraph<E>{
 
 	}
 
+	/*
+	 * Adds an item to the graph and then returns it. If the item already exists, 
+	 * 		the method only returns the item.
+	 */
 	@Override
 	public Node<E> addNodeFor(E item) {
 		if(item != null) {
@@ -48,6 +52,10 @@ public class MyGraph<E> implements DirectedGraph<E>{
 		}
 	}
 
+	/*
+	 * Adds an edge between two nodes. If there already is an edge between the two specified nodes return false,
+	 * 	else return true.
+	 */
 	@Override
 	public boolean addEdgeFor(E from, E to) {
 		if(from == null || to == null) {
@@ -131,6 +139,9 @@ public class MyGraph<E> implements DirectedGraph<E>{
 		return edges;
 	}
 
+	/*
+	 * Removes the node for the specified item and also disconnects it from it's adjacent nodes.
+	 */
 	@Override
 	public void removeNodeFor(E item) { 
 		if(item == null || !_graph.containsKey(item)) {
@@ -165,6 +176,10 @@ public class MyGraph<E> implements DirectedGraph<E>{
 		}
 	}
 
+	/*
+	 * Removes the edge between two specified nodes and returns true if there is a connection between them.
+	 *  Otherwise returns false.  
+	 */
 	@Override
 	public boolean removeEdgeFor(E from, E to) {
 		if(from == null || to == null) {

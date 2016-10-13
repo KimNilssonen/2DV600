@@ -11,6 +11,11 @@ import graphs.Node;
 
 public class MyBFS<E> implements BFS<E> {
 
+	/*
+	 * This method calls the bfsRecursive method which returns a list of all nodes in a breadth first order.
+	 * 		The bfsRecursive method calls itself until the graph has no more nodes to search through.
+	 * Returns a list sorted as breadth first
+	 */
 	@Override
 	public List<Node<E>> bfs(DirectedGraph<E> graph, Node<E> root) {
 		HashSet<Node<E>> visitedList = new HashSet<>();
@@ -21,6 +26,11 @@ public class MyBFS<E> implements BFS<E> {
 		return bfsRecursive(hashSet, visitedList, returnList);
 	}
 
+	/*
+	 * This method calls the bfsRecursive method which returns a list of all nodes in a breadth first order.
+	 * 		The bfsRecursive method calls itself until the graph has no more nodes to search through.
+	 * Returns a list sorted as breadth first.
+	 */
 	@Override
 	public List<Node<E>> bfs(DirectedGraph<E> graph) {
 		List<Node<E>> returnList = new ArrayList<>(); // O(1)
@@ -55,7 +65,6 @@ public class MyBFS<E> implements BFS<E> {
 	 * ------ Help method ------
 	 * -------------------------
 	 */
-
 	private List<Node<E>> bfsRecursive(HashSet<Node<E>> hashSet, HashSet<Node<E>> visitedList, List<Node<E>> returnList) {		
 		Iterator<Node<E>> hashSetIterator = hashSet.iterator(); // O(1)
 		HashSet<Node<E>> newSet = new HashSet<>(); // O(1)
